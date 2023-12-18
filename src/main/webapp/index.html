@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>와이파이 정보 구하기</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dcdada;
+            height: 70px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #04AA6D;
+            color: white;
+        }
+    </style>
+    <script>
+        // 초기값을 0.0으로 설정
+        var lat = 0.0;
+        var lnt = 0.0;
+
+        function clickBtn() {
+            window.navigator.geolocation.getCurrentPosition(function(position) {
+                // 얻은 값을 전역 변수에 저장
+                lat = position.coords.latitude;
+                lnt = position.coords.longitude;
+
+                // 값을 입력하는 input 엘리먼트에 반영
+                document.getElementById('latInput').value = lat;
+                document.getElementById('lntInput').value = lnt;
+            }, function(error) {
+                alert("위치 정보를 가져오는 데 실패했습니다.");
+            });
+        }
+
+        function redirectToNearWifi() {
+            // 값을 그대로 전달
+            window.location.href = './nearWifi.jsp?lat=' + lat + '&lnt=' + lnt;
+        }
+    </script>
+</head>
+<body>
+<h1>와이파이 정보 구하기</h1>
+<a href="./index.html">홈</a> |
+<a href="./history.jsp">위치 히스토리 목록</a>
+<a href="./info.html">Open API 와이파이 정보 가져오기</a>
+<br>
+<br>
+LAT: <input type="text" id="latInput" value="0.0">,
+LNT: <input type="text" id="lntInput" value="0.0">
+<button onclick="clickBtn()">내 위치 가져오기</button>
+<!-- 근처 WIFI 정보 보기를 눌렀을 때 위치 정보를 전달 -->
+<button onclick="redirectToNearWifi()">근처 WIFI 정보 보기</button>
+<br>
+<br>
+<table>
+    <tr>
+        <th>거리(Km)</th>
+        <th>관리번호</th>
+        <th>자치구</th>
+        <th>와이파이명</th>
+        <th>도로명주소</th>
+        <th>상세주소</th>
+        <th>설치위치(층)</th>
+        <th>설치유형</th>
+        <th>설치기관</th>
+        <th>서비스구분</th>
+        <th>망종류</th>
+        <th>설치년도</th>
+        <th>실내외구분</th>
+        <th>WIFI접속환경</th>
+        <th>X좌표</th>
+        <th>Y좌표</th>
+        <th>작업일자</th>
+    </tr>
+    <tr>
+        <td colspan="17">위치 정보를 입력한 후에 조회해 주세요.</td>
+    </tr>
+</table>
+</body>
+</html>
